@@ -1,3 +1,3 @@
 [submodule "dot_config/task/managebac_integration"]
 	path = dot_config/task/managebac_integration
-	url = https://github.com/dvir-yona/managebac_integration.git
+	url = git@github.com:dvir-yona/managebac_integration.git
