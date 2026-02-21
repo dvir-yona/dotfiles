@@ -1,0 +1,27 @@
+#compdef habit
+
+_habit() {
+    local -a raw_projects
+    typeset -A unique_map
+    local p parent
+
+    # 1. Get the full project list from Taskwarrior
+    raw_projects=($(task _projects))
+
+    # 2. Loop through projects and store them as keys in the map
+    for p in $raw_projects; do
+        unique_map[$p]=1  # Add the full project
+        
+        parent="$p"
+        while [[ "$parent" == *.* ]]; do
+            parent="${parent%.*}"
+            unique_map[$parent]=1 # Add each parent level
+        done
+    done
+
+    # 3. compadd takes the keys (k) of the associative array
+    # This list is guaranteed to be unique and deduplicated
+    _arguments "1:project:compadd ${(k)unique_map}"
+}
+
+_habit "$@"

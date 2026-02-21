@@ -1,0 +1,15 @@
+txn:
+  type: interval
+  before: 
+  after: {"id":0,"start":"20260118T122149Z","tags":["Finish the zig backend","next","work.app"]}
+txn:
+  type: interval
+  before: {"id":1,"start":"20260118T122149Z","tags":["Finish the zig backend","next","work.app"]}
+  after: 
+  type: interval
+  before: 
+  after: {"id":1,"start":"20260118T122149Z","end":"20260118T232517Z","tags":["Finish the zig backend","next","work.app"]}
+txn:
+  type: interval
+  before: {"id":1,"start":"20260118T122149Z","end":"20260118T232517Z","tags":["Finish the zig backend","next","work.app"]}
+  after: 

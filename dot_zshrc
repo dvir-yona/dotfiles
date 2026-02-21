@@ -1,0 +1,76 @@
+# p10k
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+source "$HOME/.zsh/path_prepare.sh"
+# basic exports
+export EDITOR=nvim
+export VISUAL=nvim
+export KEYTIMEOUT=1
+
+# tmux
+if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [[ $- == *i* ]]; then
+    exec tmux -u new-session -A -s main
+fi
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# vi mode
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
+ZVM_VI_HIGHLIGHT_FOREGROUND=#1e1e2e
+ZVM_VI_HIGHLIGHT_BACKGROUND=#cba6f7
+
+source "$HOME/.zsh/lazyloaded.sh"
+source "$HOME/.zsh/program_setup.sh"
+source "$HOME/.zsh/keybinds.sh"
+source "$HOME/.zsh/fzf.sh"
+
+# plugins 
+zsh_plugins=${ZDOTDIR:-$HOME}/.zsh_plugins
+[[ -f ${zsh_plugins}.txt ]] || touch ${zsh_plugins}.txt
+ANTIDOTE_DIR=${ZDOTDIR:-$HOME}/.zsh/.antidote
+fpath=($ANTIDOTE_DIR/functions $fpath)
+autoload -Uz antidote
+# Generate a new static file ONLY if .txt is newer than .zsh
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+  antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
+fi
+source ${zsh_plugins}.zsh
+
+# Completion Initialization
+fpath=($HOME/.zsh/completions $fpath)
+autoload -Uz compinit
+# cache check
+if [[ -n "$HOME/.zcompdump(#qN.mh+24)" ]]; then
+  compinit -d "$HOME/.zcompdump"
+else
+  compinit -C -d "$HOME/.zcompdump"
+fi
+
+# Options
+setopt COMPLETE_IN_WORD ALWAYS_TO_END PATH_DIRS AUTO_MENU
+# History configuration
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=10000
+setopt HIST_EXPIRE_DUPS_FIRST HIST_IGNORE_DUPS HIST_IGNORE_SPACE HIST_FIND_NO_DUPS SHARE_HISTORY APPEND_HISTORY
+
+# Completion Styles
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:*:*:*:*' menu select
+
+# Zoxide & eza
+if [[ ! -f "$HOME/.cache/zoxide-init.zsh" ]]; then
+    zoxide init zsh --cmd=cd > "$HOME/.cache/zoxide-init.zsh"
+fi
+alias ls='eza --oneline --icons --group-directories-first -a'
+source "$HOME/.cache/zoxide-init.zsh"
+
+# Auto-Compile
+for file in ~/.zshrc "$HOME/.zsh/"*.sh; do
+    if [[ -f "$file" ]] && [[ "$file" -nt "${file}.zwc" ]]; then
+        zcompile "$file"
+    fi
+done

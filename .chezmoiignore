@@ -1,0 +1,12 @@
+**/.zig-cache
+**/zig-out
+**/taskchampion.sqlite3
+**/user/default.target.wants/**
+**/user/graphical-session.target.wants/**
+**/user/timers.target.wants/**
+**/user/sockets.target.wants/**
+**/timewarrior/data/**
+.config/nvim/plugin_data/
+.config/nvim/undodir/
+.zsh/.antidote/**
+.config/nvim/lazy-lock.json

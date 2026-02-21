@@ -1,0 +1,13 @@
+[Unit]
+Description=ManageBac Taskwarrior Integration Sync
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=TIMEWARRIORDB="$HOME/.config/timewarrior"
+ExecStart=/home/dvir/.config/task/managebac_integration/zig-out/bin/managebac_integration
+ExecStartPre=/bin/sh -c 'until ping -c 1 google.com; do sleep 1; done'
+ExecStartPre=/bin/sh -c 'until dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply /org/freedesktop/DBus org.freedesktop.DBus.ListNames | grep -q "org.freedesktop.Notifications"; do sleep 1; done'
+
+[Install]
+WantedBy=default.target

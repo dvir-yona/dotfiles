@@ -1,0 +1,25 @@
+[Unit]
+Description=rclone Google Drive mount
+After=local-fs.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/rclone mount gdrive:ObsidianVault %h/drive/ObsidianVault \
+  --vfs-cache-mode full \
+  --vfs-cache-max-size 10G \
+  --vfs-read-chunk-size 32M \
+	--vfs-read-chunk-size-limit off \
+	--dir-cache-time 1000h
+	--attr-timeout 1000h
+	--poll-interval 15s
+	--buffer-size 16M \
+  --no-modtime \
+  --log-level INFO \
+  --log-file %h/.cache/rclone-mount.log \
+  --cache-info-age 30m
+ExecStop=/usr/bin/fusermount3 -uz %h/drive/ObsidianVault
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

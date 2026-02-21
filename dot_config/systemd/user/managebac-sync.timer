@@ -1,0 +1,13 @@
+[Unit]
+Description=Run ManageBac Sync Daily
+
+[Timer]
+# Run every day at 5:00 PM
+OnCalendar=*-*-* 17:00:00
+# If the computer was off at 10:00 AM, run it immediately upon startup
+Persistent=true
+# Optional: Add a bit of randomness so it doesn't hit the server at the exact same second
+RandomizedDelaySec=5m
+
+[Install]
+WantedBy=timers.target

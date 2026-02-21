@@ -1,0 +1,26 @@
+# [Created by task 3.4.2 12/21/2025 11:46:46]
+data.location=~/.config/task/.task
+news.version=3.4.2
+
+#data.location=~/.local/share/task
+hooks.location=~/.config/task/hooks
+
+include bubblegum-256.theme
+
+report.next.columns=id,depends,priority,project,tags,scheduled.countdown,due.relative,until.remaining,description.count
+report.next.labels=ID,Deps,P,Project,Tag,S,Due,Until,Description
+color.overdue=bold red
+color.due.today=yellow
+recurrence.limit=1
+sync.server.url=http:\/\/localhost:53589
+sync.server.client_id=3babf2b9-7ea0-4453-be14-e61f3190a9c8
+sync.encryption_secret=`77\/I,63
+
+report.habit.description=Habit Tracker
+report.habit.columns=end,project,description
+report.habit.labels=Date,Project,Description
+report.habit.sort=end-
+report.habit.filter=status:completed
+uda.mbid.type=string
+uda.mbid.label=ManageBacID
+urgency.uda.mbid.coefficient=5.0

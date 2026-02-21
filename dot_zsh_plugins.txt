@@ -1,0 +1,21 @@
+# Core
+zsh-users/zsh-completions
+
+# Libs (Keep these)
+ohmyzsh/ohmyzsh path:lib/clipboard.zsh
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/sudo
+
+# Vi Mode
+jeffreytse/zsh-vi-mode
+
+# Prompt
+romkatv/powerlevel10k
+
+# complitions
+Aloxaf/fzf-tab
+zsh-users/zsh-history-substring-search
+
+# Autosuggestions & Syntax
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting

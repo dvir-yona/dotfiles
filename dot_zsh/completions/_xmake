@@ -1,0 +1,11 @@
+#compdef xmake
+
+local profile="$HOME/.xmake/profile"
+
+if [[ ! -f "$profile" ]]; then
+    command xmake update --integrate >/dev/null 2>&1
+fi
+
+source "$profile"
+
+_xmake "$@"
