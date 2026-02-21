@@ -28,8 +28,40 @@ return {
 			--  You could remove this setup call if you don't like it,
 			--  and try some other statusline plugin
 			local statusline = require 'mini.statusline'
-			-- set use_icons to true if you have a Nerd Font
-			statusline.setup { use_icons = vim.g.have_nerd_font }
+			local function get_ssh_indicator()
+				if vim.env.SSH_CLIENT ~= nil or vim.env.SSH_TTY ~= nil then
+					return 'SSH '
+				end
+				return ''
+			end
+			statusline.setup {
+				content = {
+					active = function()
+						local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+						local git = statusline.section_git { trunc_width = 75 }
+						local diff = statusline.section_diff { trunc_width = 75 }
+						local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
+						local filename = statusline.section_filename { trunc_width = 140 }
+						local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
+						local location = statusline.section_location { trunc_width = 75 }
+
+						local ssh = get_ssh_indicator()
+
+						return statusline.combine_groups {
+							{ hl = mode_hl, strings = { mode } },
+							{ hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics } },
+							-- Add the SSH indicator here (with a custom highlight if you want)
+							{ hl = 'ErrorMsg', strings = { ssh } },
+							'%<', -- Mark general truncate point
+							{ hl = 'MiniStatuslineFilename', strings = { filename } },
+							'%=', -- End left alignment
+							{ hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+							{ hl = mode_hl, strings = { location } },
+						}
+					end,
+				},
+				use_icons = vim.g.have_nerd_font,
+			}
 
 			-- You can configure sections in the statusline by overriding their
 			-- default behavior. For example, here we set the section for
