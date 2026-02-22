@@ -108,7 +108,10 @@
     # example               # example user-defined segment (see prompt_example function below)
   )
 
-	typeset -g POWERLEVEL9K_SSH_CONTENT_EXPANSION='%BSSH%b'
+	typeset -g POWERLEVEL9K_SSH_CONTENT_EXPANSION='  %BSSH REMOTE%b  '
+	typeset -g POWERLEVEL9K_SSH_VISUAL_IDENTIFIER_EXPANSION='󰣀'
+	typeset -g POWERLEVEL9K_SSH_BACKGROUND=208
+	typeset -g POWERLEVEL9K_SSH_FOREGROUND=255
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
   typeset -g POWERLEVEL9K_MODE=nerdfont-v3
